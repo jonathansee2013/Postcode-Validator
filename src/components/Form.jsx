@@ -1,33 +1,47 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-const API_KEY = '872608e3-4530-4c6a-a369-052accb03ca8';
+const api_key = '872608e3-4530-4c6a-a369-052accb03ca8';
+const url = 'https://digitalapi.auspost.com.au/postcode/search'
 
 export default class Form extends Component {
   constructor(props) {
     super(props);
-    this.handleChangePostcode = this.handleChangePostcode.bind(this)
-    this.handleChangeSuburb = this.handleChangeSuburb.bind(this)
-    this.handleChangeState = this.handleChangeState.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {
       postcode: '',
       suburb: '',
       state: ''
     };
+    this.handleChangePostcode = this.handleChangePostcode.bind(this)
+    this.handleChangeSuburb = this.handleChangeSuburb.bind(this)
+    this.handleChangeState = this.handleChangeState.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleSubmit(event) {
     alert('A name was submitted: ' + this.state.postcode + this.state.suburb + this.state.state);
     event.preventDefault();
 
-    axios.get(
+    // axios.get({
+    //   method:'get',
+    //   url: url + '.{format}?q=`${this.state.suburb}`&state=`${this.state.state}`',
+    //   responseType:'stream'
+    // })
+    //   .then(res => {
+    //    const posts = res.data.data.children.map(obj => obj.data);
+    //    this.setState({ posts });
+    //  });
+    
+    // const myHeaders = new Headers({"AUTH-KEY": "872608e3-4530-4c6a-a369-052accb03ca8"});
+    // const myInit = {
+    //   method: 'GET',
+    //   headers: myHeaders,
+    //   mode: 'cors',
+    //   cache: 'default' };
+    // fetch('https://digitalapi.auspost.com.au/postcode/search.json?q=`${this.state.suburb}`', myInit)
+    // .then(response => response.json())
+    // .then(data => console.log("results:", data));
+    }
 
-    )
-     .then(res => {
-       const posts = res.data.data.children.map(obj => obj.data);
-       this.setState({ posts });
-     });
-  }
 
   handleChangePostcode(event) {
     this.setState({
