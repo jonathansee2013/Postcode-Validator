@@ -10,7 +10,7 @@ export default class Form extends Component {
       postcode: '',
       suburb: '',
       state: '',
-      message: 'The postcode 2000 does not match the suburb Broadway'
+      message: ''
     };
     this.handleChangePostcode = this.handleChangePostcode.bind(this)
     this.handleChangeSuburb = this.handleChangeSuburb.bind(this)
@@ -22,29 +22,35 @@ export default class Form extends Component {
     alert('A name was submitted: ' + this.state.postcode + this.state.suburb + this.state.state);
     event.preventDefault();
 
-    let endpoint = 'http://localhost:9999/api?suburb=' + this.state.suburb;
+    let endpoint = 'http://localhost:9999/api?suburb=' + this.state.suburb + '&state=' + this.state.state;
 
     axios.get(endpoint)
     .then(function(response){
-      // let localitiesArray = response.data.localities.locality;
-      //
-      //  if ()
+      let localitiesArray = response.data.localities.locality;
+      for (let index of localitiesArray) {
+        console.log(index);
+        // if (index.location === this.state.suburb && index.postcode === this.state.postcode && index.state === this.state.state) {
+        //   this.setState({
+        //     message: 'The postcode, suburb and state are valid',
+        //   })
+        // } else if (index.postcode !== this.state.postcode && index.location !== this.state.location) {
+        //   this.setState({
+        //     message: 'The postcode `${this.state.postcode}` does not match suburb `${this.state.suburb}`',
+        //   })
+        // } else if (index.location !== this.state.suburb && index.state !== this.state.state) {
+        //   this.setState({
+        //     message: 'The suburb `${this.state.suburb}` does not exist in the state of `${this.state.state}`',
+        //   })
+        // }
+        // console.log(index.postcode + index.location);
+      }
       console.log(response);
     })
     .catch(function(error){
       console.log(error);
     });
 
-    // axios.get({
-    //   method:'get',
-    //   url: url + '.{format}?q=`${this.state.suburb}`&state=`${this.state.state}`',
-    //   responseType:'stream'
-    // })
-    //   .then(res => {
-    //    const posts = res.data.data.children.map(obj => obj.data);
-    //    this.setState({ posts });
-    //  });
-    }
+  }
 
 
   handleChangePostcode(event) {

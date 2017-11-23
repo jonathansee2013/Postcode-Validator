@@ -20,8 +20,8 @@ app.get('/api', function(req,res) {
 
   // set up a new request to Auspost
   var config = {
-    // get the suburb from the URL querystring, to forward on to Auspost
-    uri: 'https://digitalapi.auspost.com.au/postcode/search.json?q=' + req.query.suburb,
+    // get the suburb and state from the URL querystring, to forward on to Auspost
+    uri: 'https://digitalapi.auspost.com.au/postcode/search.json?q=' + req.query.suburb + '&state=' + req.query.state,
     method: 'GET',
     headers: {
       "AUTH-KEY": "872608e3-4530-4c6a-a369-052accb03ca8"
