@@ -61,6 +61,9 @@ body {
    color: #4f3312;
    text-shadow: #fdf2e4 0 1px 0;
    }
+.message-container {
+  height: 10px;
+}
 .submit-container {
    margin:8px 0;
    text-align:right;

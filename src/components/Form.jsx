@@ -9,7 +9,8 @@ export default class Form extends Component {
     this.state = {
       postcode: '',
       suburb: '',
-      state: ''
+      state: '',
+      message: 'The postcode 2000 does not match the suburb Broadway'
     };
     this.handleChangePostcode = this.handleChangePostcode.bind(this)
     this.handleChangeSuburb = this.handleChangeSuburb.bind(this)
@@ -21,6 +22,19 @@ export default class Form extends Component {
     alert('A name was submitted: ' + this.state.postcode + this.state.suburb + this.state.state);
     event.preventDefault();
 
+    let endpoint = 'http://localhost:9999/api?suburb=' + this.state.suburb;
+
+    axios.get(endpoint)
+    .then(function(response){
+      // let localitiesArray = response.data.localities.locality;
+      //
+      //  if ()
+      console.log(response);
+    })
+    .catch(function(error){
+      console.log(error);
+    });
+
     // axios.get({
     //   method:'get',
     //   url: url + '.{format}?q=`${this.state.suburb}`&state=`${this.state.state}`',
@@ -30,16 +44,6 @@ export default class Form extends Component {
     //    const posts = res.data.data.children.map(obj => obj.data);
     //    this.setState({ posts });
     //  });
-    
-    // const myHeaders = new Headers({"AUTH-KEY": "872608e3-4530-4c6a-a369-052accb03ca8"});
-    // const myInit = {
-    //   method: 'GET',
-    //   headers: myHeaders,
-    //   mode: 'cors',
-    //   cache: 'default' };
-    // fetch('https://digitalapi.auspost.com.au/postcode/search.json?q=`${this.state.suburb}`', myInit)
-    // .then(response => response.json())
-    // .then(data => console.log("results:", data));
     }
 
 
@@ -87,6 +91,10 @@ export default class Form extends Component {
           name="postcode"
           type="text"
           value={this.state.state} onChange={this.handleChangeState} />
+
+        <div className="message-container">
+          { this.state.message && <p>{this.state.message}</p>}
+        </div>
 
           <div className="submit-container">
             <input
