@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-const api_key = '872608e3-4530-4c6a-a369-052accb03ca8';
-const url = 'https://digitalapi.auspost.com.au/postcode/search'
 
 export default class Form extends Component {
   constructor(props) {
@@ -21,34 +19,37 @@ export default class Form extends Component {
   handleSubmit(event) {
     alert('A name was submitted: ' + this.state.postcode + this.state.suburb + this.state.state);
     event.preventDefault();
+    // I want to change Submit button to Clear button.
+    // Then when Clear button clicked, refresh form.
 
     let endpoint = 'http://localhost:9999/api?suburb=' + this.state.suburb + '&state=' + this.state.state;
 
     axios.get(endpoint)
-    .then(function(response){
-      let localitiesArray = response.data.localities.locality;
-      for (let index of localitiesArray) {
-        console.log(index);
-        // if (index.location === this.state.suburb && index.postcode === this.state.postcode && index.state === this.state.state) {
-        //   this.setState({
-        //     message: 'The postcode, suburb and state are valid',
-        //   })
-        // } else if (index.postcode !== this.state.postcode && index.location !== this.state.location) {
-        //   this.setState({
-        //     message: 'The postcode `${this.state.postcode}` does not match suburb `${this.state.suburb}`',
-        //   })
-        // } else if (index.location !== this.state.suburb && index.state !== this.state.state) {
-        //   this.setState({
-        //     message: 'The suburb `${this.state.suburb}` does not exist in the state of `${this.state.state}`',
-        //   })
-        // }
-        // console.log(index.postcode + index.location);
-      }
-      console.log(response);
-    })
-    .catch(function(error){
-      console.log(error);
-    });
+      .then(response => {
+        let localitiesArray = response.data.localities.locality;
+        console.log("i am array", localitiesArray)
+        localitiesArray.forEach((locality, index) => {
+
+          if (Number(this.state.postcode) === locality.postcode && this.state.suburb.toUpperCase() === locality.location && this.state.state === locality.state) {
+            console.log("if statement works!")
+            this.setState({
+              message: "The postcode, suburb and state are valid"
+            })
+            return
+          } else if ((Number(this.state.postcode) !== locality.postcode)){
+            this.setState({
+              message: `The postcode ${this.state.postcode} does not match suburb ${this.state.suburb}`
+            })
+            return
+          } else if(this.state.state !== locality.state) {
+            this.setState({
+              message: `The state ${this.state.state} does not match suburb ${this.state.suburb}`
+            })
+            return
+          }
+        })
+      })
+      .catch(error => console.log(error))
 
   }
 
@@ -74,33 +75,29 @@ export default class Form extends Component {
   render() {
     return (
       <div className="container">
-      <form
-        className="form-container" onSubmit={this.handleSubmit}>
-        <div className="form-title">Postcode</div>
-        <input
-          className="form-field"
-          name="postcode"
-          type="text"
-          value={this.state.postcode} onChange={this.handleChangePostcode} />
+        <form
+          className="form-container" onSubmit={this.handleSubmit}>
+          <div className="form-title">Postcode</div>
+          <input
+            className="form-field"
+            name="postcode"
+            type="text"
+            value={this.state.postcode} onChange={this.handleChangePostcode} />
 
-        <div className="form-title">Suburb</div>
-        <input
-          className="form-field"
-          name="suburb"
-          type="text"
-          value={this.state.suburb}
-          onChange={this.handleChangeSuburb} />
+          <div className="form-title">Suburb</div>
+          <input
+            className="form-field"
+            name="suburb"
+            type="text"
+            value={this.state.suburb}
+            onChange={this.handleChangeSuburb} />
 
-        <div className="form-title">State</div>
-        <input
-          className="form-field"
-          name="postcode"
-          type="text"
-          value={this.state.state} onChange={this.handleChangeState} />
-
-        <div className="message-container">
-          { this.state.message && <p>{this.state.message}</p>}
-        </div>
+          <div className="form-title">State</div>
+          <input
+            className="form-field"
+            name="postcode"
+            type="text"
+            value={this.state.state} onChange={this.handleChangeState} />
 
           <div className="submit-container">
             <input
@@ -108,7 +105,12 @@ export default class Form extends Component {
               type="submit"
               value="Submit" />
           </div>
-      </form>
+        </form>
+
+        <div className="message-container">
+          { this.state.message && <p>{this.state.message}</p>}
+        </div>
+
       </div>
     )
   }
