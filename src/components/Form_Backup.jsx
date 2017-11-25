@@ -22,14 +22,14 @@ export default class Form extends Component {
     // I want to change Submit button to Clear button.
     // Then when Clear button clicked, refresh form.
 
-    let endpoint = 'http://localhost:9999/api?suburb=' + this.state.suburb + '&state=' + this.state.state;
+    let endpoint = `http://localhost:9999/api?q=${this.state.postcode || this.state.suburb}&state=${this.state.state}`;
     let that = this;
 
     axios.get(endpoint)
       .then( ({ data:{localities} } ) => {
         // initialize match state variables
-        // let postcodeMatchesState = false;
-        // let suburbMatchesState = false;
+        let postcodeMatchesState = false;
+        let suburbMatchesState = false;
 
         if ( localities ){ // search result not empty
           if (Array.isArray(localities.locality)) {
@@ -68,11 +68,11 @@ export default class Form extends Component {
 
       })
 
-/*
-        // let localitiesArray = response.data.localities.locality;
-        //console.log("i am array", localitiesArray)
 
+/* =========== using forEach ==============
 
+        let localitiesArray = response.data.localities.locality;
+        console.log("i am array", localitiesArray)
 
         localitiesArray.forEach((locality, index) => {
 
