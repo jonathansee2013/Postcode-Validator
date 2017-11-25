@@ -28,7 +28,7 @@ export default class Form extends Component {
 
     axios.get(endpoint)
     .then( ({ data:{localities} } ) => {
-    
+      console.log(localities);
     // .then( response => {
     //   let localities = response.data.localities;
 
@@ -53,8 +53,8 @@ export default class Form extends Component {
 
       // helper function to set match variables for multiple search results
       const checkArrayLocality = ( localitiesArray ) => {
-        for (let i=0; i<localitiesArray.length; i++) {
-          checkSingleLocality(localitiesArray[i]);
+        for (let locality of localitiesArray){
+          checkSingleLocality(locality);
           if (suburbMatchesState === true) { // early return if all matches
             return
           }
@@ -64,11 +64,11 @@ export default class Form extends Component {
       // helper function to change message state
       const setMessageState = ()=> {
         let message;
-        if ( suburbMatchesState ){
+        if ( suburbMatchesState ){ // postcode, suburb & state match
           message = 'The postcode, suburb and state entered are valid';
-        } else if (postcodeMatchesSuburb) {
+        } else if (postcodeMatchesSuburb) { // postcode & suburb match but NOT suburb & state
           message = `The suburb ${that.state.suburb} does not exist in the state ${that.state.state}`;
-        } else {
+        } else { // postcode & suburb do NOT match suburb & state do NOT match
           message = `The postcode ${that.state.postcode} does not match the suburb ${that.state.suburb}`;
         }
         that.setState({ message });
@@ -77,7 +77,7 @@ export default class Form extends Component {
       // if search result empty, early return
       if (! localities ){
         that.setState({
-          message: `The suburb ${that.state.suburb} or postcode ${that.state.postcode} does not exist in the state ${that.state.state}`
+          message: `${that.state.postcode || that.state.suburb} does not exist in the state of ${that.state.state}`
         })
         return;
       }
@@ -90,9 +90,9 @@ export default class Form extends Component {
       }
 
       // according to match variables, set message state accordingly
-      setMessageState(postcodeMatchesSuburb,suburbMatchesState);
+      setMessageState();
     })
-    .catch(function (error) {
+    .catch( error => {
       if (error.response.data.error){ // response error has errorMessage
         that.setState({message: error.response.data.error.errorMessage});
       } else { // response error does not have errorMessage
