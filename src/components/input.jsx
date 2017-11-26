@@ -6,7 +6,7 @@ class Input extends Component {
     this.state = { value: '' };
   }
 
-  onInputChange(value) {
+  handleChangeInput(value) {
     this.setState({value});
     this.props.onSearchValueChange(value);
   }
@@ -16,7 +16,7 @@ class Input extends Component {
       <div className="inputs">
         <input
           value={this.state.value}
-          onChange={event => this.onInputChange(event.target.value)}/>
+          onChange={event => this.handleChangeInput(event.target.value)}/>
       </div>
     )
   }

@@ -12,7 +12,7 @@ Checkout this repo, install dependencies, then start the process with the follow
 > git clone https://github.com/jonathansee2013/Postcode-Validator.git
 > cd Postcode-Validator
 > npm install
-> npm start`
+> npm start
 ```
 
 Open another tab in the terminal in the same directory and:
