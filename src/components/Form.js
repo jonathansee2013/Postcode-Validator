@@ -19,8 +19,6 @@ export default class Form extends Component {
   handleSubmit(event) {
 
     event.preventDefault();
-    // I want to change Submit button to Clear button.
-    // Then when Clear button clicked, refresh form.
 
     let endpoint = `http://localhost:9999/api?q=${this.state.postcode
       || this.state.suburb}&state=${this.state.state}`;
@@ -32,7 +30,7 @@ export default class Form extends Component {
     // .then( response => {
     //   let localities = response.data.localities;
 
-      // initialize two match varialbes for two step check
+      // initialize two match variables for two step check
       let postcodeMatchesSuburb = false;
       let suburbMatchesState = false;
 
