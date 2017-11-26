@@ -4,16 +4,18 @@ import axios from 'axios';
 export default class Form extends Component {
   constructor(props) {
     super(props);
+
+    this.handleChangePostcode = this.handleChangePostcode.bind(this)
+    this.handleChangeSuburb = this.handleChangeSuburb.bind(this)
+    this.handleChangeState = this.handleChangeState.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+
     this.state = {
       postcode: '',
       suburb: '',
       state: '',
       message: ''
     };
-    this.handleChangePostcode = this.handleChangePostcode.bind(this)
-    this.handleChangeSuburb = this.handleChangeSuburb.bind(this)
-    this.handleChangeState = this.handleChangeState.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleSubmit(event) {
@@ -89,7 +91,7 @@ export default class Form extends Component {
 
       // according to match variables, set message state accordingly
       setMessageState();
-    })
+    }) // .then
     .catch( error => {
       if (error.response.data.error){ // response error has errorMessage
         that.setState({message: error.response.data.error.errorMessage});
@@ -99,8 +101,6 @@ export default class Form extends Component {
     });
 
   } // handleSubmit
-
-
 
   handleChangePostcode(event) {
     this.setState({
