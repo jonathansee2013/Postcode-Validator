@@ -9,7 +9,7 @@ body {
 }
 
 .validator {
-  margin: 20% auto;
+  margin: 10% auto;
 }
 
 .header {
@@ -40,7 +40,7 @@ body {
    padding:20px;
    width:300px;
    }
-.form-field {
+.form-field, .select-field {
    border: 1px solid #c9b7a2;
    background: #e4d5c3;
    -webkit-border-radius: 4px;
@@ -54,9 +54,13 @@ body {
    margin-bottom:20px;
    width:280px;
    }
-.form-field:focus {
+.form-field:focus, .select-field:focus {
    background: #fff;
    color: #725129;
+   }
+.select-field {
+   width:298px;
+   height:30px;
    }
 .form-container h2 {
    text-shadow: #fdf2e4 0 1px 0;

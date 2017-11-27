@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -115,7 +116,8 @@ export default class Form extends Component {
               className="form-field"
               name="postcode"
               type="text"
-              value={this.state.postcode} onChange={ (event) => this.handleChange(event, "postcode")} />
+              value={this.state.postcode} onChange={ (event) => this.handleChange(event, "postcode")}
+              required />
 
             <div className="form-title">Suburb</div>
             <input
@@ -123,15 +125,25 @@ export default class Form extends Component {
               name="suburb"
               type="text"
               value={this.state.suburb}
-              onChange={(event) => this.handleChange(event, "suburb")} />
+              onChange={(event) => this.handleChange(event, "suburb")}
+              required />
 
             <div className="form-title">State</div>
-            <input
-              className="form-field"
-              name="postcode"
+            <select
+              className="select-field"
+              name="state"
               type="text"
-              value={this.state.state} onChange={(event) => this.handleChange(event, "state")} />
-
+              value={this.state.state}
+              onChange={(event) => this.handleChange(event, "state")}>
+              <option value="NSW">NSW</option>
+              <option value="QLD">QLD</option>
+              <option value="SA">SA</option>
+              <option value="TAS">TAS</option>
+              <option value="VIC">VIC</option>
+              <option value="WA">WA</option>
+              <option value="NT">NT</option>
+              <option value="ACT">ACT</option>
+            </select>
 
             <div className="submit-container">
               <input
