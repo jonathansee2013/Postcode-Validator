@@ -21,7 +21,7 @@ export default class Form extends Component {
 
     event.preventDefault();
 
-    let endpoint = `http://localhost:9999/api?q=${this.state.suburb || this.state.postcode}&state=${this.state.state}`;
+    let endpoint = `http://localhost:9999/api?q=${this.state.postcode}&state=${this.state.state}`;
     let that = this;
 
     axios.get(endpoint)
