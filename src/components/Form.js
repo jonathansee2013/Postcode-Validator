@@ -12,7 +12,7 @@ export default class Form extends Component {
     this.state = {
       postcode: '',
       suburb: '',
-      state: '',
+      state: 'NSW',
       message: ''
     };
   }
