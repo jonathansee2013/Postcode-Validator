@@ -1,5 +1,7 @@
 
 import React, { Component } from 'react';
+import Input from './Input';
+import SelectState from './SelectState';
 import axios from 'axios';
 
 export default class Form extends Component {
@@ -111,39 +113,13 @@ export default class Form extends Component {
         <div className="container">
           <form
             className="form-container" onSubmit={this.handleSubmit}>
-            <div className="form-title">Postcode</div>
-            <input
-              className="form-field"
-              name="postcode"
-              type="text"
-              value={this.state.postcode} onChange={ (event) => this.handleChange(event, "postcode")}
-              required />
 
-            <div className="form-title">Suburb</div>
-            <input
-              className="form-field"
-              name="suburb"
-              type="text"
-              value={this.state.suburb}
-              onChange={(event) => this.handleChange(event, "suburb")}
-              required />
+            <Input name="Postcode" value={this.state.postcode}
+              onChange={ (event) => this.handleChange(event, "postcode")}/>
+            <Input name="Suburb" value={this.state.suburb}
+              onChange={ (event) => this.handleChange(event, "suburb")}/>
 
-            <div className="form-title">State</div>
-            <select
-              className="select-field"
-              name="state"
-              type="text"
-              value={this.state.state}
-              onChange={(event) => this.handleChange(event, "state")}>
-              <option value="NSW">NSW</option>
-              <option value="QLD">QLD</option>
-              <option value="SA">SA</option>
-              <option value="TAS">TAS</option>
-              <option value="VIC">VIC</option>
-              <option value="WA">WA</option>
-              <option value="NT">NT</option>
-              <option value="ACT">ACT</option>
-            </select>
+            <SelectState value={this.state.state} onChange={ (event) => this.handleChange(event, "state")} />
 
             <div className="submit-container">
               <input
