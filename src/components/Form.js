@@ -19,16 +19,28 @@ export default class Form extends Component {
     };
   }
 
+
   handleSubmit(event) {
 
     event.preventDefault();
 
-    let endpoint = `http://localhost:9999/api?q=${this.state.postcode}&state=${this.state.state}`;
+    let endpoint = `http://localhost:9999/api?q=${this.state.suburb}&state=${this.state.state}`;
     let that = this;
 
     axios.get(endpoint)
     .then( ({ data:{localities} } ) => {
       console.log(localities);
+
+      const fullState = {
+        NSW: "New South Wales",
+        QLD: "Queensland",
+        SA: "South Australia",
+        TAS: "Tasmania",
+        VIC: "Victoria",
+        WA: "Western Australia",
+        NT: "Northern Territory",
+        ACT: "Australian Capital Territory"
+      }
 
       // initialize two match variables for two step check
       let postcodeMatchesSuburb = false;
@@ -65,7 +77,7 @@ export default class Form extends Component {
         if ( suburbMatchesState ){ // postcode, suburb & state match
           message = 'The postcode, suburb and state entered are valid';
         } else if (postcodeMatchesSuburb) { // postcode & suburb match but NOT suburb & state
-          message = `The suburb ${that.state.suburb} does not exist in the state ${that.state.state}`;
+          message = `The suburb ${that.state.suburb} does not exist in the state ${fullState[that.state.state]}`;
         } else { // postcode & suburb do NOT match suburb & state do NOT match
           message = `The postcode ${that.state.postcode} does not match the suburb ${that.state.suburb}`;
         }
@@ -75,7 +87,7 @@ export default class Form extends Component {
       // if search result empty, early return
       if (! localities ){
         that.setState({
-          message: `${that.state.postcode || that.state.suburb} does not exist in the state of ${that.state.state}`
+          message: `The suburb ${that.state.suburb} does not exist in the state of ${fullState[that.state.state]}`
         })
         return;
       }
@@ -122,10 +134,7 @@ export default class Form extends Component {
             <SelectState value={this.state.state} onChange={ (event) => this.handleChange(event, "state")} />
 
             <div className="submit-container">
-              <input
-                className="submit-button"
-                type="submit"
-                value="Submit" />
+              <input className="submit-button" type="submit" value="Submit" />
             </div>
 
             <div className="message-container">

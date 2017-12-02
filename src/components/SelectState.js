@@ -16,12 +16,8 @@ class SelectState extends Component {
     return (
       <div>
         <div className="form-title">State</div>
-        <select
-          className="select-field"
-          name="state"
-          type="text"
-          value={this.props.value}
-          onChange={this.handleSelectChange}>
+        <select className="select-field" name="state" type="text"
+          value={this.props.value} onChange={this.handleSelectChange}>
           <option value="NSW">NSW</option>
           <option value="QLD">QLD</option>
           <option value="SA">SA</option>
